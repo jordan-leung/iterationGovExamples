@@ -89,7 +89,7 @@ end
 % x1
 subtightplot(3,2,1,subPlotGap,subPlotH,subPlotW)
 xlabel('Time','interpreter','Latex','Fontsize',labelsize)
-ylabel('$x_1$','interpreter','Latex','FontSize',labelsize)
+ylabel('$s$','interpreter','Latex','FontSize',labelsize)
 % legend('$x_{1,k}$','$v_k$','interpreter','Latex','Fontsize',legendsize,'location','northeast')
 ylim([-1.1 1.1])
 legend(handVec,'IG-MPC','SG-MPC','rMPC','interpreter','Latex','Fontsize',legendsize,'location','southeast')
