@@ -32,13 +32,13 @@ icflag = 3;
 dataList =[{strcat('output_ig_N10_ic',num2str(icflag),'_ws0')};...
     {strcat('output_sg_N10_ic',num2str(icflag),'_ws0')};...
     {strcat('output_tracking_N46_ic',num2str(icflag))};...
-    {strcat('output_tracking_N56_ic',num2str(icflag))};...
-    {strcat('output_tracking_N66_ic',num2str(icflag))}];
-handVec = zeros(3,1);
-handVec2 = zeros(3,1);
+    {strcat('output_tracking_N70_ic',num2str(icflag))}];
+NData = length(dataList);
+handVec = zeros(NData,1);
+handVec2 = zeros(NData,1);
 
 % s
-for iOuter = 1:length(dataList)
+for iOuter = 1:NData
     % Load IG
     loadstr = ['./Data/',dataList{iOuter}];
     load(loadstr)
@@ -93,7 +93,8 @@ xlabel('Time','interpreter','Latex','Fontsize',labelsize)
 ylabel('$s$','interpreter','Latex','FontSize',labelsize)
 % legend('$x_{1,k}$','$v_k$','interpreter','Latex','Fontsize',legendsize,'location','northeast')
 ylim([-1.1 1.1])
-legend(handVec,'IG-MPC','SG-MPC','rMPC','interpreter','Latex','Fontsize',legendsize,'location','southeast')
+legend(handVec,'IG','SG','rMPC$_{N=46}$','rMPC$_{N=70}$','interpreter',...
+    'Latex','Fontsize',legendsize,'location','southeast','NumColumns',3)
 
 
 % u 
@@ -109,7 +110,9 @@ xlabel('Time','interpreter','Latex','Fontsize',labelsize)
 ylabel('$\ell$','interpreter','Latex','FontSize',labelsize)
 % ylim([0 35])
 % yticks([0 10 20 30])
-legend([handVec2(1:2); h_ell],'IG-MPC','SG-MPC','$\ell^*_{N=10}$','interpreter','Latex','Fontsize',legendsize,'location','northeast')
+legend([handVec2(1:2); h_ell],'IG','SG','$\ell^*$','interpreter','Latex',...
+    'Fontsize',legendsize,'location','northeast','Numcolumns',3)
+ylim([0 70])
 
 % Iterations
 subtightplot(3,2,4,subPlotGap,subPlotH,subPlotW);
@@ -117,7 +120,7 @@ xlabel('Time','interpreter','Latex','Fontsize',labelsize)
 ylabel('$\ell$','interpreter','Latex','FontSize',labelsize)
 % ylim([0 35])
 % yticks([0 10 20 30])
-legend([handVec(3:end)],'rMPC','$\ell^*_{N=46}$','interpreter','Latex','Fontsize',legendsize,'location','northeast')
+legend([handVec(3:end)],'rMPC$_{N=46}$','rMPC$_{N=70}$','interpreter','Latex','Fontsize',legendsize,'location','northeast')
 
 if saveFigFlagOuter == 1
     figure(1)

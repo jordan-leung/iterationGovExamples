@@ -55,7 +55,7 @@ end
 
 
 % Set horizon
-N_MPC = 80;
+N_MPC = 70;
 T_MPC = dt;
 lambda = 1;
 

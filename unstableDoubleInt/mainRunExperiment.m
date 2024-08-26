@@ -16,8 +16,8 @@ RUN_FLAG = 'standard'; % run rMPC
 ws_flag = 0;
 
 % Set save data flag
-% saveDataFlag = 0;
-saveDataFlag = 1;
+saveDataFlag = 0;
+% saveDataFlag = 1;
 
 % Run common file to set simulation parameters
 setSimulationParameters;
