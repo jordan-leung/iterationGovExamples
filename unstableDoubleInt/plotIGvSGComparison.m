@@ -9,7 +9,7 @@ set(0,'defaultAxesFontSize',12)
 %% Plot trajectories (CS)
 saveFigFlagOuter = 0;
 labelsize = 14;
-legendsize = 14;
+legendsize = 12;
 
 colorMatrix = colororder;
 greyColor = [111 111 111]/255;
@@ -32,7 +32,8 @@ icflag = 3;
 dataList =[{strcat('output_ig_N10_ic',num2str(icflag),'_ws0')};...
     {strcat('output_sg_N10_ic',num2str(icflag),'_ws0')};...
     {strcat('output_tracking_N46_ic',num2str(icflag))}];
-
+handVec = zeros(3,1);
+handVec2 = zeros(3,1);
 
 % s
 for iOuter = 1:3
@@ -51,13 +52,13 @@ for iOuter = 1:3
 
     % x1
     subtightplot(3,2,1,subPlotGap,subPlotH,subPlotW)
-    plot(t,X(1,:),'Color',colorMatrix(iOuter,:))
+    handVec(iOuter) = plot(t,X(1,:),'Color',colorMatrix(iOuter,:));
     hold on; box on; grid on
     if iOuter < 3
         plot(t,refHist,'Linestyle','-.','LineWidth',1,'Color',colorMatrix(iOuter,:))
     end
 %     plot(t(1),X(1,1),markerStr{iOuter},'MarkerSize',sillyMarkerSize,'Color',colorMatrix(iOuter,:),'linewidth',1);
-    plot(t(1),X(1,1),'.','Color',colorMatrix(iOuter,:),'linewidth',1);
+%     plot(t(1),X(1,1),'.','Color',colorMatrix(iOuter,:),'linewidth',1);
 
     % delta
     subtightplot(3,2,2,subPlotGap,subPlotH,subPlotW)
@@ -76,12 +77,12 @@ for iOuter = 1:3
             h_ell = plot(t(1:end-1),t(1:end-1)*0+output.controlArgs.const.ellStar_cs,'k-.');
             hold on; box on; grid on;
         end
-        stairs(t(1:end-1),ellHist,'LineWidth',1,'color',colorMatrix(iOuter,:));
+        handVec2(iOuter) = stairs(t(1:end-1),ellHist,'LineWidth',1,'color',colorMatrix(iOuter,:));
     else
         subtightplot(3,2,4,subPlotGap,subPlotH,subPlotW);
         h_ell2 = plot(t(1:end-1),t(1:end-1)*0+output.controlArgs.const.ellStar_cs,'k-.');
         hold on; box on; grid on;
-        stairs(t(1:end-1),ellHist,'LineWidth',1,'color',colorMatrix(iOuter,:));
+        handVec(iOuter) = stairs(t(1:end-1),ellHist,'LineWidth',1,'color',colorMatrix(iOuter,:));
     end 
 end
 % Add legends and axes
@@ -91,6 +92,8 @@ xlabel('Time','interpreter','Latex','Fontsize',labelsize)
 ylabel('$x_1$','interpreter','Latex','FontSize',labelsize)
 % legend('$x_{1,k}$','$v_k$','interpreter','Latex','Fontsize',legendsize,'location','northeast')
 ylim([-1.1 1.1])
+legend(handVec,'IG-MPC','SG-MPC','rMPC','interpreter','Latex','Fontsize',legendsize,'location','southeast')
+
 
 % u 
 subtightplot(3,2,2,subPlotGap,subPlotH,subPlotW)
@@ -105,7 +108,7 @@ xlabel('Time','interpreter','Latex','Fontsize',labelsize)
 ylabel('$\ell$','interpreter','Latex','FontSize',labelsize)
 % ylim([0 35])
 % yticks([0 10 20 30])
-legend(h_ell,'$\ell^* (N=10)$','interpreter','Latex','Fontsize',legendsize,'location','northeast')
+legend([handVec2(1:2); h_ell],'IG-MPC','SG-MPC','$\ell^*_{N=10}$','interpreter','Latex','Fontsize',legendsize,'location','northeast')
 
 % Iterations
 subtightplot(3,2,4,subPlotGap,subPlotH,subPlotW);
@@ -113,7 +116,7 @@ xlabel('Time','interpreter','Latex','Fontsize',labelsize)
 ylabel('$\ell$','interpreter','Latex','FontSize',labelsize)
 % ylim([0 35])
 % yticks([0 10 20 30])
-legend(h_ell2,'$\ell^* (N=46)$','interpreter','Latex','Fontsize',legendsize,'location','northeast')
+legend([handVec(3); h_ell2],'rMPC','$\ell^*_{N=46}$','interpreter','Latex','Fontsize',legendsize,'location','northeast')
 
 if saveFigFlagOuter == 1
     figure(1)
