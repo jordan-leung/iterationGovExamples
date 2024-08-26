@@ -71,7 +71,7 @@ while outerLoopRunCond
     end
     
     % Check convergence criteria
-    lastRes = norm(x - xPrev,Inf);
+    lastRes = norm(x - xPrev,2);
     xConv = lastRes;
     
     if iterCount >= MaxIter

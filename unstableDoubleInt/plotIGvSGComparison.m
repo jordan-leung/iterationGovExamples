@@ -31,12 +31,14 @@ set(gcf,'units','normalized','position',figSize)
 icflag = 3;
 dataList =[{strcat('output_ig_N10_ic',num2str(icflag),'_ws0')};...
     {strcat('output_sg_N10_ic',num2str(icflag),'_ws0')};...
-    {strcat('output_tracking_N46_ic',num2str(icflag))}];
+    {strcat('output_tracking_N46_ic',num2str(icflag))};...
+    {strcat('output_tracking_N56_ic',num2str(icflag))};...
+    {strcat('output_tracking_N66_ic',num2str(icflag))}];
 handVec = zeros(3,1);
 handVec2 = zeros(3,1);
 
 % s
-for iOuter = 1:3
+for iOuter = 1:length(dataList)
     % Load IG
     loadstr = ['./Data/',dataList{iOuter}];
     load(loadstr)
@@ -80,9 +82,8 @@ for iOuter = 1:3
         handVec2(iOuter) = stairs(t(1:end-1),ellHist,'LineWidth',1,'color',colorMatrix(iOuter,:));
     else
         subtightplot(3,2,4,subPlotGap,subPlotH,subPlotW);
-        h_ell2 = plot(t(1:end-1),t(1:end-1)*0+output.controlArgs.const.ellStar_cs,'k-.');
+         handVec(iOuter) = semilogy(t(1:end-1),ellHist,'LineWidth',1,'color',colorMatrix(iOuter,:));
         hold on; box on; grid on;
-        handVec(iOuter) = stairs(t(1:end-1),ellHist,'LineWidth',1,'color',colorMatrix(iOuter,:));
     end 
 end
 % Add legends and axes
@@ -116,7 +117,7 @@ xlabel('Time','interpreter','Latex','Fontsize',labelsize)
 ylabel('$\ell$','interpreter','Latex','FontSize',labelsize)
 % ylim([0 35])
 % yticks([0 10 20 30])
-legend([handVec(3); h_ell2],'rMPC','$\ell^*_{N=46}$','interpreter','Latex','Fontsize',legendsize,'location','northeast')
+legend([handVec(3:end)],'rMPC','$\ell^*_{N=46}$','interpreter','Latex','Fontsize',legendsize,'location','northeast')
 
 if saveFigFlagOuter == 1
     figure(1)

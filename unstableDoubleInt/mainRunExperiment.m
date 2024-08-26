@@ -16,8 +16,8 @@ RUN_FLAG = 'standard'; % run rMPC
 ws_flag = 0;
 
 % Set save data flag
+% saveDataFlag = 0;
 saveDataFlag = 1;
-% saveDataFlag = 1;
 
 % Run common file to set simulation parameters
 setSimulationParameters;
@@ -103,7 +103,8 @@ else
     ellStar = ceil(ellStar_cs);
 end
 % options.MaxIter = 1000;
-options.xTol = 1e-16;
+options.xTol = 1e-6;
+options.MaxIter = 1e6;
 v0 = X0(1);
 
 % * Add controller arguments to a structure
